@@ -17,23 +17,21 @@ class AgentService implements AgentServiceInterface
             $agent->save();
 
             $message = 'Agent created successfully';
-        } 
+        }
         catch(\throw $th){
             $message = $th;
             throw $th;
         }
         
-        $response = [
-            'agent' => $agent, 
+        return [
+            'agent' => $agent,
             'message' => $message
         ];
-
-        return $response;
     }
 
-    public function getAgent($AgentID)
+    public function getAgent($agentID)
     {
-        $agent = Agent::where('AgentID', '=', $AgentID)->get();
+        $agent = Agent::where('AgentID', '=', $agentID)->get();
         
         if ($agent) {
             $response = [
@@ -81,24 +79,24 @@ class AgentService implements AgentServiceInterface
         if($request->input('first')){
             $agent = Agent::OrderBy('AgentID','asc')->first();
         }
-        else if($request->input('last'))
+        elseif ($request->input('last'))
         {
             $agent = Agent::OrderBy('AgentID','desc')->first();
         }
-        else if($request->input('prior'))
+        elseif ($request->input('prior'))
         {
             $agent = Agent::where('AgentID','<',$currAgentID)->orderByDesc('AgentID')->first();
         }
-        else if($request->input('next'))
+        elseif ($request->input('next'))
         {
             $agent = Agent::where('AgentID','>',$currAgentID)->orderBy('AgentID','asc')->first();
         }
-        else 
+        else
         {
             $agent = Agent::where('AgentID', '=', $currAgentID)->get();
         }
 
-        if ($booking) 
+        if ($agent)
         {
             $response = [
                 'agent' => $agent,
@@ -115,9 +113,9 @@ class AgentService implements AgentServiceInterface
         return $response;
     }
 
-    public function updateAgent($request, $AgentID)
+    public function updateAgent($request, $agentID)
     {
-        $agent = Agent::where('AgentID','=',$AgentID)->get();
+        $agent = Agent::where('AgentID','=',$agentID)->get();
         if ($agent) {
         
             try {
@@ -140,27 +138,27 @@ class AgentService implements AgentServiceInterface
         {
             $response = [
                 'agent' => [],
-                'message' => 'AgentID'.$AgentID.' was not found'
+                'message' => 'AgentID'.$agentID.' was not found'
             ];
         }
         return $response;
     }
 
-    public function deleteAgent($AgentID)
+    public function deleteAgent($agentID)
     {
-        $agent = Agent::where('AgentID','=',$AgentID)->get();
-        if ($agent) 
+        $agent = Agent::where('AgentID','=',$agentID)->get();
+        if ($agent)
         {
             $agent->delete();
             $response = [
-                'agent' => $AgentID,
+                'agent' => $agentID,
                 'message' => 'Agent was deleted'
             ];
         }
         else
         {
             $response = [
-                'agent' => $AgentID,
+                'agent' => $agentID,
                 'message' => 'Agent was not found'
             ];
         }

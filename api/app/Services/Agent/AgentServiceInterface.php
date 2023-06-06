@@ -1,10 +1,10 @@
 <?php
+
 namespace App\Services\Agent;
 
 interface AgentServiceInterface{
     
     /**
-     * @param array $data
      * @return agents
      */
     public function getAgents();
@@ -13,7 +13,7 @@ interface AgentServiceInterface{
      * @param int $AgentID
      * @return agent
      */
-    public function getAgent($AgentID);
+    public function getAgent($agentID);
     
     /**
      * @param array $request
@@ -28,17 +28,17 @@ interface AgentServiceInterface{
     public function paginateAgent($request);
     
     /**
-     * @param array $request, 
+     * @param array $request,
      * @param int $AgentID
      ** @return agent
      */
-    public function updateAgent($request, $AgentID);
+    public function updateAgent($request, $agentID);
     
     /**
      * @param int $AgentID
      ** @return agentID
      */
-    public function deleteAgent($AgentID);
+    public function deleteAgent($agentID);
 
    
 }

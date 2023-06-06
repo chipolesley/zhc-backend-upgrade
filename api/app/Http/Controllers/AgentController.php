@@ -3,49 +3,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Agent\AgentService;
-use App\Services\Agent\AgentServiceInterface as IAgentService;
+use App\Services\Agent\AgentServiceInterface as iAgentService;
 
 
 
 class AgentController extends Controller
 {
     public function __construct(
-        protected IAgentService $IAgentService
+        protected iAgentService $iAgentService
     ){}
 
     public function postAgent(Request $request)
     {
-        $agent = $this->IAgentService->create($request);
+        $agent = $this->iAgentService->createAgent($request);
         return response()->json($agent, 201);
     }
 
     public function getAgents()
     {
-        $agents = $this->IAgentService->getAgents();
+        $agents = $this->iAgentService->getAgents();
         return response()->json($agents, 200);
     }
 
-    public function getAgent($AgentID)
+    public function getAgent($agentID)
     {
-        $agent = $this->IAgentService->getAgent($AgentID);
+        $agent = $this->iAgentService->getAgent($agentID);
         return response()->json($agent, 200);
     }
 
     public function paginateAgent(Request $request)
     {
-        $agent = $this->IAgentService->packageAgent($request);
+        $agent = $this->iAgentService->packageAgent($request);
         return response()->json($agent, 200);
     }
 
-    public function putAgent(Request $request, $AgentID)
+    public function putAgent(Request $request, $agentID)
     {
-        $agent = $this->IAgentService->putAgent($request, $AgentID);
+        $agent = $this->iAgentService->putAgent($request, $agentID);
         return response()->json($agent, 201);
     }
 
-    public function deleteAgent($AgentID)
+    public function deleteAgent($agentID)
     {
-        $agent = $this->IAgentService->deleteAgent($AgentID);
+        $agent = $this->iAgentService->deleteAgent($agentID);
         return response()->json($agent, 200);
     }
 }

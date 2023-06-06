@@ -14,44 +14,43 @@ class BookingController extends Controller
 
     public function getBookings()
     {
-        $response = $this->bookingService->getBookings();
-        return response()->json($response, 200);
+        $bookings = $this->bookingService->getBookings();
+        return response()->json($bookings, 200);
     }
 
-    public function getBooking($BookingID)
+    public function getBooking($bookingID)
     {
-        $booking = $this->bookingService->getBooking($BookingID);
-        return response()->json($response, 200);
+        $booking = $this->bookingService->getBooking($bookingID);
+        return response()->json($booking, 200);
     }
 
-    public function searchBookings($PaxName)
+    public function searchBookings($paxName)
     {
-        $bookings = $this->bookingService->searchBookings($PaxName);
-        return response()->json($response, 200);
+        $bookings = $this->bookingService->searchBookings($paxName);
+        return response()->json($bookings, 200);
     }
 
     public function paginateBooking(Request $request)
     {
         $booking = $this->bookingService->paginateBooking($request);
-        return response()->json( $booking, 200);
+        return response()->json($booking, 200);
     }
 
     public function postBooking(Request $request)
     {
-        
         $booking = $this->bookingService->createBooking($request);
-        return $booking;
-    }
-
-    public function putBooking(Request $request, $BookingID)
-    {
-        $booking = $this->bookingService->putBooking($request, $BookingID);
         return response()->json($booking, 200);
     }
 
-    public function deleteBooking($BookingID)
+    public function putBooking(Request $request, $bookingID)
     {
-        $booking = $this->bookingService->deleteBooking($BookingID);
+        $booking = $this->bookingService->putBooking($request, $bookingID);
+        return response()->json($booking, 200);
+    }
+
+    public function deleteBooking($bookingID)
+    {
+        $booking = $this->bookingService->deleteBooking($bookingID);
         return response()->json($booking, 200);
     }
 }

@@ -66,7 +66,7 @@ class Booking extends Model
     /**
      *  Booking _has_ currency
      */
-    public function  Currency(): HasOne 
+    public function  Currency(): HasOne
     {
         return $this-> hasOne(Currency::class,'CurrencyID','Currency');
     }

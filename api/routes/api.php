@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(AgentController::class)->group(function () {
     Route::get('/agents', 'getAgents');
     Route::get('/agent/{AgentID}', 'getAgent');
-    Route::post('/agent', 'postAgents');
+    Route::post('/agent', 'createAgent');
     Route::post('/agent/paginate', 'paginateAgent');
     Route::put('/agents/{AgentID}', 'putAgents');
     Route::delete('/agents/{AgentID}', 'deleteAgents');
@@ -32,8 +32,18 @@ Route::controller(BookingController::class)->group(function () {
     Route::get('/bookings', 'getBookings');
     Route::get('/booking/{BookingID}', 'getBooking');
     Route::get('/booking/search/{PaxName}', 'searchBookings');
-    Route::post('/booking', 'postBookings');
+    Route::post('/booking', 'createBooking');
     Route::post('/booking/paginate', 'paginateBooking');
     Route::put('/bookings/{BookingID}', 'putBookings');
     Route::delete('/bookings/{BookingID}', 'deleteBookings');
+});
+
+Route::controller(BookingController::class)->group(function () {
+    Route::get('/bookingdetails', 'getProductDetails');
+    Route::get('/bookingdetail/{ProductDetailID}', 'getProductDetail');
+    Route::post('/bookingdetail', 'createProductDetail');
+    Route::post('/bookingdetails', 'getProductDetails');
+    Route::post('/bookingdetail/paginate', 'paginateProductDetail');
+    Route::put('/bookingdetails/{ProductDetailID}', 'putProductDetail');
+    Route::delete('/bookingdetails/{ProductDetailID}', 'deleteProductDetails');
 });
