@@ -12,7 +12,7 @@ class ProductDetailController extends Controller
         protected iProductService $iProductService
     ){}
     
-    public function postProductDetail(Request $request)
+    public function createProductDetail(Request $request)
     {
         $productDetail = $this->iProductService->createProductDetail($request);
         return response()->json($productDetail, 201);
@@ -36,9 +36,9 @@ class ProductDetailController extends Controller
         return response()->json($productDetail, 200);
     }
 
-    public function putProductDetail(Request $request, $productDetailID)
+    public function updateProductDetail(Request $request, $productDetailID)
     {
-        $productDetail = $this->iProductService->putProductDetail($request, $productDetailID);
+        $productDetail = $this->iProductService->updateProductDetail($request, $productDetailID);
         return response()->json($productDetail, 200);
     }
 

@@ -277,7 +277,7 @@ class BookingService implements BookingServiceInterface
         return $response;
     }
 
-    public function putBooking($request, $bookingID)
+    public function updateBooking($request, $bookingID)
     {
         $booking = Booking::where('BookingID','=',$bookingID)->get();
         if ($booking) {

@@ -19,7 +19,7 @@ class Booking extends Model
      */
     public function  ProductDetail(): HasMany
     {
-        return $this-> hasMany(ProductDetail::class,'BookingID','BookingID');
+        return $this->hasMany(ProductDetail::class,'BookingID','BookingID');
     }
 
     /**
@@ -27,7 +27,7 @@ class Booking extends Model
      */
     public function  Agent(): HasOne
     {
-        return $this-> hasOne(Agent::class,'ID','AgentID');
+        return $this->hasOne(Agent::class,'ID','AgentID');
     }
 
     /**
@@ -35,7 +35,7 @@ class Booking extends Model
      */
     public function  Consultant(): HasOne
     {
-        return $this-> hasOne(Consultant::class,'ID','DoneBy');
+        return $this->hasOne(Consultant::class,'ID','DoneBy');
     }
 
     /**
@@ -43,7 +43,7 @@ class Booking extends Model
      */
     public function  AgentConsultant(): HasOne
     {
-        return $this-> hasOne(AgentConsultant::class,'ID','Consultant');
+        return $this->hasOne(AgentConsultant::class,'ID','Consultant');
     }
 
     /**
@@ -51,7 +51,7 @@ class Booking extends Model
      */
     public function  Nationality(): HasMany
     {
-        return $this-> hasMany(Nationality::class,'ID','Nationality');
+        return $this->hasMany(Nationality::class,'ID','Nationality');
     }
 
     /**
@@ -59,7 +59,7 @@ class Booking extends Model
      */
     public function  Correspondence(): HasMany
     {
-        return $this-> hasMany(Correspondence::class,'ID','BookingID');
+        return $this->hasMany(Correspondence::class,'ID','BookingID');
     }
 
 
@@ -68,7 +68,7 @@ class Booking extends Model
      */
     public function  Currency(): HasOne
     {
-        return $this-> hasOne(Currency::class,'CurrencyID','Currency');
+        return $this->hasOne(Currency::class,'CurrencyID','Currency');
     }
 
     /**
@@ -76,7 +76,7 @@ class Booking extends Model
      */
     public function  ConsultantUpdatedBy(): HasOne
     {
-        return $this-> hasOne(ConsultantUpdatedBy::class,'ID','LastUpdatedBy');
+        return $this->hasOne(ConsultantUpdatedBy::class,'ID','LastUpdatedBy');
     }
 
 }

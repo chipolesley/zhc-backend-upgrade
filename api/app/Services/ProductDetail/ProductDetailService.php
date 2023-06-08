@@ -139,7 +139,7 @@ class ProductDetailService implements ProductDetailServiceInterface
         return $response;
     }
 
-    public function putProductDetail($request, $productDetailID)
+    public function updateProductDetail($request, $productDetailID)
     {
         $productDetail = ProductDetail::where('ID','=',$productDetailID)->get();
         

@@ -13,7 +13,7 @@ class AgentController extends Controller
         protected iAgentService $iAgentService
     ){}
 
-    public function postAgent(Request $request)
+    public function createAgent(Request $request)
     {
         $agent = $this->iAgentService->createAgent($request);
         return response()->json($agent, 201);
@@ -37,7 +37,7 @@ class AgentController extends Controller
         return response()->json($agent, 200);
     }
 
-    public function putAgent(Request $request, $agentID)
+    public function updateAgent(Request $request, $agentID)
     {
         $agent = $this->iAgentService->putAgent($request, $agentID);
         return response()->json($agent, 201);

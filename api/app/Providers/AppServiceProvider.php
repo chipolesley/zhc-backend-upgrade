@@ -16,6 +16,14 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\ProductDetail\ProductDetailServiceInterface',
             'App\Services\ProductDetail\ProductDetailService'
         );
+        $this->app->bind(
+            'App\Services\Booking\BookingServiceInterface',
+            'App\Services\Booking\BookingService'
+        );
+        $this->app->bind(
+            'App\Services\Nationality\NationalityServiceInterface',
+            'App\Services\Nationality\NationalityService'
+        );
     }
 
     /**

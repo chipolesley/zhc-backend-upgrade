@@ -36,15 +36,15 @@ class BookingController extends Controller
         return response()->json($booking, 200);
     }
 
-    public function postBooking(Request $request)
+    public function createBooking(Request $request)
     {
         $booking = $this->bookingService->createBooking($request);
         return response()->json($booking, 200);
     }
 
-    public function putBooking(Request $request, $bookingID)
+    public function updateBooking(Request $request, $bookingID)
     {
-        $booking = $this->bookingService->putBooking($request, $bookingID);
+        $booking = $this->bookingService->updateBooking($request, $bookingID);
         return response()->json($booking, 200);
     }
 

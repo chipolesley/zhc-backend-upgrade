@@ -8,6 +8,6 @@ interface BookingServiceInterface
     public function getBooking($bookingID);
     public function searchBookings($paxName);
     public function paginateBooking($request);
-    public function putBooking($request, $bookingID);
+    public function updateBooking($request, $bookingID);
     public function deleteBooking($bookingID);
 }

@@ -33,7 +33,7 @@ interface ProductDetailServiceInterface
      * @param int $productDetail
      ** @return ProductDetail
      */
-    public function putProductDetail($request, $productDetail);
+    public function updateProductDetail($request, $productDetail);
 
     /**
      * @param int $productDetail
