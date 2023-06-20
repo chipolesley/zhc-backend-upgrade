@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\NationalityController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ConsultantController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,4 +60,21 @@ Route::controller(NationalityController::class)->group(function () {
     Route::delete('/nationalities/{nationalityID}', 'deleteNationality');
 });
 
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products', 'getProducts');
+    Route::get('/product/{productID}', 'getProduct');
+    Route::post('/product', 'createProduct');
+    Route::post('/product/paginate', 'paginateProduct');
+    Route::put('/products/{productID}', 'updateProduct');
+    Route::delete('/products/{productID}', 'deleteProduct');
+});
+
+Route::controller(ConsultantController::class)->group(function () {
+    Route::get('/consultants', 'getConsultants');
+    Route::get('/consultant/{consultantID}', 'getConsultant');
+    Route::post('/consultant', 'createConsultant');
+    Route::post('/consultant/paginate', 'paginateConsultant');
+    Route::put('/consultant/{consultantID}', 'updateConsultant');
+    Route::delete('/consultants/{consultantID}', 'deleteConsultant');
+});
 

@@ -24,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\Nationality\NationalityServiceInterface',
             'App\Services\Nationality\NationalityService'
         );
+        $this->app->bind(
+            'App\Services\Product\ProductServiceInterface',
+            'App\Services\Product\ProductService'
+        );
+        $this->app->bind(
+            'App\Services\Consultant\ConsultantServiceInterface',
+            'App\Services\Consultant\ConsultantService'
+        );
     }
 
     /**

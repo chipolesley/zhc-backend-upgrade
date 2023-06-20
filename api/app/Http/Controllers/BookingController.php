@@ -3,54 +3,54 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Services\BookingService;
+use App\Services\Booking\BookingServiceInterface as iBookingService;
 
 
 class BookingController extends Controller
 {
     public function __construct(
-        protected BookingService $bookingService
+        protected iBookingService $iBookingService
     ){}
 
     public function getBookings()
     {
-        $bookings = $this->bookingService->getBookings();
+        $bookings = $this->iBookingService->getBookings();
         return response()->json($bookings, 200);
     }
 
     public function getBooking($bookingID)
     {
-        $booking = $this->bookingService->getBooking($bookingID);
+        $booking = $this->iBookingService->getBooking($bookingID);
         return response()->json($booking, 200);
     }
 
     public function searchBookings($paxName)
     {
-        $bookings = $this->bookingService->searchBookings($paxName);
+        $bookings = $this->iBookingService->searchBookings($paxName);
         return response()->json($bookings, 200);
     }
 
     public function paginateBooking(Request $request)
     {
-        $booking = $this->bookingService->paginateBooking($request);
+        $booking = $this->iBookingService->paginateBooking($request);
         return response()->json($booking, 200);
     }
 
     public function createBooking(Request $request)
     {
-        $booking = $this->bookingService->createBooking($request);
+        $booking = $this->iBookingService->createBooking($request);
         return response()->json($booking, 200);
     }
 
     public function updateBooking(Request $request, $bookingID)
     {
-        $booking = $this->bookingService->updateBooking($request, $bookingID);
+        $booking = $this->iBookingService->updateBooking($request, $bookingID);
         return response()->json($booking, 200);
     }
 
     public function deleteBooking($bookingID)
     {
-        $booking = $this->bookingService->deleteBooking($bookingID);
+        $booking = $this->iBookingService->deleteBooking($bookingID);
         return response()->json($booking, 200);
     }
 }

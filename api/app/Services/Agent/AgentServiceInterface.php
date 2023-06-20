@@ -7,13 +7,13 @@ interface AgentServiceInterface{
     /**
      * @return agents
      */
-    public function getAgents();
+    public function retrieveAgents();
     
     /**
      * @param int $AgentID
      * @return agent
      */
-    public function getAgent($agentID);
+    public function retrieveAgent($agentID);
     
     /**
      * @param array $request
@@ -38,7 +38,7 @@ interface AgentServiceInterface{
      * @param int $AgentID
      ** @return agentID
      */
-    public function deleteAgent($agentID);
+    public function RemoveAgent($agentID);
 
    
 }

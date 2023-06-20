@@ -68,7 +68,7 @@ class BookingService implements BookingServiceInterface
         catch (\Throwable $th)
         {
             $response = [
-                'bookings' => $bookings,
+                'bookings' => [],
                 'message' => $th
             ];
             throw $th;
@@ -201,7 +201,7 @@ class BookingService implements BookingServiceInterface
                                     )
                                     ->where('DocType','!=',2)
                                     ->where('IsCashSale','=','0')
-                                    -> OrderBy('BookingID','desc')
+                                    ->OrderBy('BookingID','desc')
                                     ->first();
         }
         elseif ($request->input('prior'))

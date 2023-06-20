@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Nationality;
 use Illuminate\Http\Request;
 use App\Services\Nationality\NationalityServiceInterface as iNationalityService;
 
