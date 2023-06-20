@@ -14,13 +14,13 @@ class BookingController extends Controller
 
     public function getBookings()
     {
-        $bookings = $this->iBookingService->getBookings();
+        $bookings = $this->iBookingService->retrieveBookings();
         return response()->json($bookings, 200);
     }
 
     public function getBooking($bookingID)
     {
-        $booking = $this->iBookingService->getBooking($bookingID);
+        $booking = $this->iBookingService->retrieveBooking($bookingID);
         return response()->json($booking, 200);
     }
 
@@ -50,7 +50,7 @@ class BookingController extends Controller
 
     public function deleteBooking($bookingID)
     {
-        $booking = $this->iBookingService->deleteBooking($bookingID);
+        $booking = $this->iBookingService->removeBooking($bookingID);
         return response()->json($booking, 200);
     }
 }

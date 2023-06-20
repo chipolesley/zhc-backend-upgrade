@@ -2,330 +2,66 @@
 
 namespace App\Services\Booking;
 
-use App\Models\Booking;
+/** Actions Import*/
+use App\Actions\Booking\PutBooking;
+use App\Actions\Booking\GetBooking;
+use App\Actions\Booking\FindBooking;
+use App\Actions\Booking\PostBooking;
+use App\Actions\Booking\GetBookings;
+use App\Actions\Booking\DeleteBooking;
+use App\Actions\Booking\GetBookingPagination;
 
 class BookingService implements BookingServiceInterface
 {
+    public function __construct(
+        protected PutBooking $putBookingAction,
+        protected FindBooking $findBookingAction,
+        protected GetBooking $getBookingAction,
+        protected GetBookings $getBookingsAction,
+        protected PostBooking $postBookingAction,
+        protected DeleteBooking $deleteBookingAction,
+        protected GetBookingPagination $getBookingPaginationAction,
+    ){}
+    
     public function createBooking($request)
     {
-        $booking = [];
-        $message = '';
-        try
-        {
-            //create a new booking
-            $booking = new Booking();
-            $booking->content = $request->input('content');
-            $booking->save();
-
-            $message = 'Booking was successfully created';
-        }
-        catch (\Throwable $th) {
-            $message = $th;
-            throw $th;
-        }
-
-        return [
-            'booking' => $booking,
-            'message' => $message
-        ];
-        
+       $booking = $this->postBookingAction->execute($request);
+        return $booking;
     }
 
-    public function getBookings()
+    public function retrieveBookings()
     {
-        try
-        {
-            //get all bookings with there relationships
-            $bookings = Booking::with(
-                                      'ProductDetail',
-                                      'Agent',
-                                      'AgentConsultant',
-                                      'Nationality',
-                                      'Consultant',
-                                      'Correspondence',
-                                      'Currency',
-                                      'ConsultantUpdatedBy',
-                                      'Correspondence'
-                                    )
-                                    ->OrderBy('BookingID','desc')
-                                    ->first();
-            //check if there are any bookings
-            if($bookings)
-            {
-                $response = [
-                    'bookings' => $bookings,
-                    'message' => 'Bookings where loaded successfully'
-                ];
-            }
-            else
-            {
-                $response = [
-                    'bookings' => [],
-                    'message' => 'Bookings where not found'
-                ];
-            }
-        }
-        catch (\Throwable $th)
-        {
-            $response = [
-                'bookings' => [],
-                'message' => $th
-            ];
-            throw $th;
-        }
-        return $response;
+        $bookings = $this->getBookingsAction->execute();
+        return $bookings;
     }
 
     public function searchBookings($paxName)
     {
-        //search for bookings
-        $bookings = Booking::with(
-                                  'ProductDetail',
-                                  'Agent',
-                                  'AgentConsultant',
-                                  'Nationality',
-                                  'Consultant',
-                                  'Correspondence',
-                                  'Currency',
-                                  'ConsultantUpdatedBy',
-                                  'Correspondence'
-                                )
-                                ->where('DocType','!=',2)
-                                ->where('IsCashSale','=','0')
-                                ->where('PaxName','Like',$paxName)
-                                ->orWhere('PaxName', 'like', '%'.$paxName.'%')
-                                ->orderBy('BookingDate','desc')
-                                ->limit(10)
-                                ->get();
-        
-        //check if there are any bookings found
-        if($bookings)
-        {
-            $response = [
-                'bookings' => $bookings,
-                'message' => 'Bookings was found'
-            ];
-        }
-        else
-        {
-            $response = [
-                'bookings' => [],
-               'message' => 'Bookings where not found'
-            ];
-        }
-       
-        return $response;
+        $booking = $this->findBookingAction->execute($paxName);
+        return $booking;
     }
 
-    public function getBooking($bookingID)
+    public function retrieveBooking($bookingID)
     {
-        $booking = [];
-        try {
-            //get booking information
-            $booking = Booking::with(
-                                     'ProductDetail',
-                                     'Agent',
-                                     'AgentConsultant',
-                                     'Nationality',
-                                     'Consultant',
-                                     'Correspondence',
-                                     'Currency',
-                                     'ConsultantUpdatedBy',
-                                     'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')
-                                    ->where('BookingID', $bookingID)
-                                    ->get();
-
-            //check if the booking exists
-            if ($booking) {
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was loaded successfully'
-                ];
-            }
-            else
-            {
-                $response = [
-                'booking' => $booking,
-                'message' => 'Booking was not found'
-                ];
-            }
-        } catch (\Throwable $th) {
-            
-            $response = [
-                'booking' => $booking,
-                'message' => $th
-                ];
-            throw $th;
-        }
-
-        return $response;
+        $booking = $this->getBookingAction->execute($bookingID);
+        return $booking;
     }
 
     public function paginateBooking($request)
     {
-        $currBookingID = $request->input('BookingID');
-
-        if($request->input('first'))
-        {
-            $booking = Booking::with(
-                                     'ProductDetail',
-                                     'Agent',
-                                     'AgentConsultant',
-                                     'Nationality',
-                                     'Consultant',
-                                     'Correspondence',
-                                     'Currency',
-                                     'ConsultantUpdatedBy',
-                                     'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')
-                                    ->OrderBy('BookingID','asc')
-                                    ->first();
-        }
-        elseif ($request->input('last'))
-        {
-            $booking = Booking::with(
-                                    'ProductDetail',
-                                    'Agent',
-                                    'AgentConsultant',
-                                    'Nationality',
-                                    'Consultant',
-                                    'Correspondence',
-                                    'Currency',
-                                    'ConsultantUpdatedBy',
-                                    'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')
-                                    ->OrderBy('BookingID','desc')
-                                    ->first();
-        }
-        elseif ($request->input('prior'))
-        {
-            $booking = Booking::with(
-                                     'ProductDetail',
-                                     'Agent',
-                                     'AgentConsultant',
-                                     'Nationality',
-                                     'Consultant',
-                                     'Correspondence',
-                                     'Currency',
-                                     'ConsultantUpdatedBy',
-                                     'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')
-                                    ->where('BookingID','<',$currBookingID)
-                                    ->orderByDesc('BookingID')
-                                    ->first();
-        }
-        elseif ($request->input('next'))
-        {
-            $booking = Booking::with(
-                                     'ProductDetail',
-                                     'Agent',
-                                     'AgentConsultant',
-                                     'Nationality',
-                                     'Consultant',
-                                     'Correspondence',
-                                     'Currency',
-                                     'ConsultantUpdatedBy',
-                                     'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')
-                                    ->where('BookingID','>',$currBookingID)
-                                    ->orderBy('BookingID','asc')
-                                    ->first();
-        }
-        else
-        {
-            $booking = Booking::with(
-                                     'ProductDetail',
-                                     'Agent',
-                                     'AgentConsultant',
-                                     'Nationality',
-                                     'Consultant',
-                                     'Correspondence',
-                                     'Currency',
-                                     'ConsultantUpdatedBy',
-                                     'Correspondence'
-                                    )
-                                    ->where('DocType','!=',2)
-                                    ->where('IsCashSale','=','0')->where('BookingID', '=', $currBookingID)
-                                    ->get();
-        }
-
-        if ($booking)
-        {
-            $response = [
-                'booking' => $booking,
-                'message' => 'Booking was loaded successfully'
-                ];
-        }
-        else
-        {
-            $response = [
-                'booking' => [],
-                'message' => 'Booking not found'
-                ];
-        }
-        return $response;
+        $bookings = $this->getBookingPaginationAction->execute($request);
+        return $bookings;
     }
 
     public function updateBooking($request, $bookingID)
     {
-        $booking = Booking::where('BookingID','=',$bookingID)->get();
-        if ($booking) {
-            try {
-                $booking->content = $request->input('content');
-                $booking->save();
-                
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was successfully updated'
-                ];
-            } catch (\Throwable $th) {
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was not successfully updated'
-                ];
-                throw $th;
-            }
-        }
-        else
-        {
-            $response = [
-                'booking' => [],
-                'message' => 'BookingID'.$bookingID.' was not found'
-            ];
-        }
-        return $response;
-
+        $booking = $this->putBookingAction->execute($request, $bookingID);
+        return $booking;
     }
 
-    public function deleteBooking($bookingID)
+    public function removeBooking($bookingID)
     {
-        $booking = Booking::where('BookingID','=',$BookingID)->get();
-        if ($booking)
-        {
-            $booking->delete();
-            $response = [
-                'booking' => $BookingID,
-                'message' => 'Booking was deleted'
-            ];
-        }
-        else
-        {
-            $response = [
-                'booking' => $BookingID,
-                'message' => 'Booking was not found'
-            ];
-        }
-        return $response;
+        $booking = $this->deleteBookingAction->execute($bookingID);
+        return $booking;
     }
 }
