@@ -18,13 +18,13 @@ class ConsultantController extends Controller
 
     public function getConsultants()
     {
-        $consultant = $this->iConsultantService->getConsultants();
+        $consultant = $this->iConsultantService->retrieveConsultants();
         return response()->json($consultant, 200);
     }
 
     public function getConsultant($consultantID)
     {
-        $consultant = $this->iConsultantService->getConsultant($consultantID);
+        $consultant = $this->iConsultantService->retrieveConsultant($consultantID);
         return response()->json($consultant, 200);
     }
 
@@ -42,7 +42,7 @@ class ConsultantController extends Controller
 
     public function deleteConsultant($consultantID)
     {
-        $consultant = $this->iConsultantService->deleteConsultant($consultantID);
+        $consultant = $this->iConsultantService->removeConsultant($consultantID);
         return response()->json($consultant, 200);
     }
 }
