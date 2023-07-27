@@ -11,21 +11,23 @@ class GetProduct
     {
         $product = ProductOrService::where('ProductID', '=', $productID)->get();
         
-        if ($product)
+        if ($product !== null)
         {
-            $response = [
-                'product' => $product,
-                'message' => 'Product was loaded successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $product,
+                'message' => 'Product was loaded successfully',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'product' => [],
-                'message' => 'Product was\'nt found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Product wasn\'t found',
+                'statusCode' => 404
             ];
         }
-        
-        return $response;
     }
 }

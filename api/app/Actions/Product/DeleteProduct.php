@@ -6,27 +6,29 @@ use App\Models\ProductOrService;
 
 class DeleteProduct
 {
-    public function execute($ProductID)
+    public function execute($productID)
     {
-        $product = ProductOrService::where('ProductID','=',$ProductID)->get();
+        $product = ProductOrService::where('ProductID','=',$productID)->get();
 
-        if($product)
+        if($product !== null)
         {
             $product->delete();
             
-            $response = [
-                'product' => $product,
-                'message' => 'Product was not found'
+            return [
+                'isSuccess' => true,
+                'data' => $product,
+                'message' => 'Product was deleted',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'product' => [],
-                'message' => 'Product was not found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Product was not found',
+                'statusCode' => 404
             ];
         }
-        
-        return $response;
     }
 }

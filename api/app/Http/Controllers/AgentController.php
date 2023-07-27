@@ -3,48 +3,60 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Agent\AgentServiceInterface as iAgentService;
+use App\Services\SendResponseService;
 
 
 
 class AgentController extends Controller
 {
     public function __construct(
-        protected iAgentService $iAgentService
+        protected iAgentService $iAgentService,
+        protected SendResponseService $sendResponseService
     ){}
 
     public function createAgent(Request $request)
     {
-        $agent = $this->iAgentService->createAgent($request);
-        return response()->json($agent, 201);
+        $data = $this->iAgentService->createAgent($request);
+        return $this->response($data);
     }
 
     public function getAgents()
     {
-        $agents = $this->iAgentService->retrieveAgents();
-        return response()->json($agents, 200);
+        $data = $this->iAgentService->retrieveAgents();
+        return $this->response($data);
     }
 
     public function getAgent($agentID)
     {
-        $agent = $this->iAgentService->retrieveAgent($agentID);
-        return response()->json($agent, 200);
+        $data = $this->iAgentService->retrieveAgent($agentID);
+        return $this->response($data);
     }
 
     public function paginateAgent(Request $request)
     {
-        $agent = $this->iAgentService->paginateAgent($request);
-        return response()->json($agent, 200);
+        $data = $this->iAgentService->paginateAgent($request);
+        return $this->response($data);
     }
 
     public function updateAgent(Request $request, $agentID)
     {
-        $agent = $this->iAgentService->updateAgent($request, $agentID);
-        return response()->json($agent, 201);
+        $data = $this->iAgentService->updateAgent($request, $agentID);
+        return $this->response($data);
     }
 
     public function deleteAgent($agentID)
     {
-        $agent = $this->iAgentService->removeAgent($agentID);
-        return response()->json($agent, 200);
+        $data = $this->iAgentService->removeAgent($agentID);
+        return $this->response($data);
+    }
+
+    private function response($data)
+    {
+        if($data['isSuccess'])
+        {
+          return $this->sendResponseService->sendResponse($data['data'], $data['message'], $data['statusCode']);
+        }
+ 
+        return $this->sendResponseService->sendError($data['data'], $data['message'], $data['statusCode']);
     }
 }

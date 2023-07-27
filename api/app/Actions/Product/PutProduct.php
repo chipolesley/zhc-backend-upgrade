@@ -10,34 +10,38 @@ class PutProduct
     {
         $product = ProductOrService::where('ProductID','=',$productID)->get();
         
-        if ($product) {
+        if ($product !== null) {
             try
             {
                 $product->content = $request->input('content');
                 $product->save();
                 
-                $response = [
-                    'product' => $product,
-                    'message' => 'Product was successfully updated'
+                return [
+                    'isSuccess' => true,
+                    'data' => $product,
+                    'message' => 'Product was successfully updated',
+                    'statusCode' => 200
                 ];
             }
             catch (\Throwable $th)
             {
-                $response = [
-                    'product' => [],
-                    'message' => $th
+                return [
+                    'isSuccess' => false,
+                    'data' => [],
+                    'message' => $th->getMessage(),
+                    'statusCode' => 500
                 ];
-                throw $th;
             }
             
         }
         else
         {
-            $response = [
-                'product' => [],
-                'message' => 'Product was not found to be updated'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Product was not found to be updated',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

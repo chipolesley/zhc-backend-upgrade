@@ -30,20 +30,23 @@ class GetProductPagination
             $product = ProductOrService::where('ProductID', '=', $currProductID)->get();
         }
         
-        if ($product) {
-            $response = [
-                'product' => $product,
-                'message' => 'Product was successfully loaded'
+        if ($product !== null) {
+            return [
+                'isSuccess' => true,
+                'data' => $product,
+                'message' => 'Product was successfully loaded',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'product' => [],
-                'message' => 'Product paginate was not found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Product paginate was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
     
 }

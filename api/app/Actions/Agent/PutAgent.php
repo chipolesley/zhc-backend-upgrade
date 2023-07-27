@@ -9,31 +9,37 @@ class PutAgent
     public function execute($request, $agentID)
     {
         $agent = Agent::where('AgentID','=',$agentID)->get();
-        if ($agent) {
-        
-            try {
+        if ($agent !== null) {
+            try
+            {
                 $agent->content = $request->input('content');
                 $agent->save();
 
-                $response = [
-                    'agent' => $agent,
-                    'message' => 'Agent was successfully updated'
+                return [
+                    'isSuccess' => true,
+                    'data' => $agent,
+                    'message' => 'Agent was successfully updated',
+                    'statusCode' => 200
                 ];
-            } catch (\Throwable $th) {
-                $response = [
-                    'agent' => $agent,
-                    'message' => 'Agent was successfully updated'
+            }
+            catch (\Throwable $th)
+            {
+                return [
+                    'isSuccess' => false,
+                    'data' => $agent,
+                    'message' => $th->getMessage(),
+                    'statusCode' => 500
                 ];
-                throw $th;
             }
         }
         else
         {
-            $response = [
-                'agent' => [],
-                'message' => 'AgentID'.$agentID.' was not found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'AgentID'.$agentID.' was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

@@ -10,22 +10,24 @@ class DeleteConsultant
     {
         $consultant = Consultant::where('ID','=',$consultantID)->get();
 
-        if($consultant)
+        if($consultant !== null)
         {
             $consultant->delete();
-            $response = [
-                'consultant' => $consultant,
-                'message' => 'Consultant was deleted successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $consultant,
+                'message' => 'Consultant was deleted successfully',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'consultant' => $consultant,
-                'message' => 'Consultant was not found'
+            return [
+                'isSuccess' => false,
+                'data' => $consultant,
+                'message' => 'Consultant was not found',
+                'statusCode' => 404
             ];
         }
-        
-        return $response;
     }
 }

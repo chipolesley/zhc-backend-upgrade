@@ -8,23 +8,27 @@ class PostAgent
 {
     public function execute($request)
     {
-        $agent = [];
-        $message = '';
-        try{            
+        try{
             $agent = new Agent();
             $agent->content = $request->input('content');
             $agent->save();
 
-            $message = 'Agent created successfully';
+            return [
+                'isSuccess' => true,
+                'data' => $agent,
+                'message' => 'Agent created successfully',
+                'statusCode' => 201
+            ];
         }
         catch(\throw $th){
-            $message = $th;
-            throw $th;
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => $th->getMessage(),
+                'statusCode' => 500
+            ];
         }
         
-        return [
-            'agent' => $agent,
-            'message' => $message
-        ];
+        
     }
 }

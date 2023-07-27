@@ -13,20 +13,23 @@ class GetAgents
                     ->OrderBy('AgentID','desc')
                     ->get();
 
-        if($agents)
+        if($agents !== null)
         {
-            $response = [
-            'agents' => $agents,
-            'message' => 'Agents were loaded successfully'
+            return [
+            'isSuccess' => true,
+            'data' => $agents,
+            'message' => 'Agents were loaded successfully',
+            'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-            'agents' => $agents,
-            'message' => 'No agents found'
+            return [
+            'isSuccess' => false,
+            'data' => $agents,
+            'message' => 'No agents found',
+            'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

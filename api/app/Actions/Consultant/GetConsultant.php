@@ -11,20 +11,23 @@ class GetConsultant
     {
         $consultant = Consultant::where('ID', '=', $consultantID)->get();
 
-        if ($consultant)
+        if ($consultant !== null)
         {
-            $response = [
-                'consultants' => $consultant,
-                'message' => 'Consultant loaded successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $consultant,
+                'message' => 'Consultant loaded successfully',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'consultants' => [],
-                'message' => 'Consultant was not found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Consultant was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

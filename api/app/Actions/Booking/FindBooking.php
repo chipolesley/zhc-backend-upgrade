@@ -29,21 +29,23 @@ class FindBooking
           ->get();
 
         //check if there are any bookings found
-        if($bookings)
+        if($bookings !== null)
         {
-        $response = [
-        'bookings' => $bookings,
-        'message' => 'Bookings was found'
-        ];
+            return [
+                'isSuccess' => true,
+                'data' => $bookings,
+                'message' => 'Bookings were successfully loaded',
+                'statusCode' => 200
+            ];
         }
         else
         {
-        $response = [
-        'bookings' => [],
-        'message' => 'Bookings where not found'
-        ];
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Bookings where not found',
+                'statusCode' => 404
+            ];
         }
-
-        return $response;
     }
 }

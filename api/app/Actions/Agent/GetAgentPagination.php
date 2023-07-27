@@ -30,21 +30,24 @@ class GetAgentPagination
             $agent = Agent::where('AgentID', '=', $currAgentID)->get();
         }
 
-        if ($agent)
+        if ($agent !== null)
         {
-            $response = [
-                'agent' => $agent,
-                'message' => 'Agent was loaded successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $agent,
+                'message' => 'Agent was loaded successfully',
+                'statusCode' => 200
                 ];
         }
         else
         {
-            $response = [
-                'agent' => $agent,
-                'message' => 'Agent not found'
+            return [
+                'isSuccess' => false,
+                'data' => $agent,
+                'message' => 'Agent not found',
+                'statusCode' => 404
                 ];
         }
-        return $response;
     }
     
 }

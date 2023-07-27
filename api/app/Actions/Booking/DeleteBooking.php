@@ -9,21 +9,24 @@ class DeleteBooking
     public function execute($bookingID)
     {
         $booking = Booking::where('BookingID','=',$bookingID)->get();
-        if ($booking)
+        if ($booking !== null)
         {
             $booking->delete();
-            $response = [
-                'booking' => $bookingID,
-                'message' => 'Booking was deleted'
+            return [
+                'isSuccess' => true,
+                'data' => $bookingID,
+                'message' => 'Booking was deleted',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'booking' => $bookingID,
-                'message' => 'Booking was not found'
+            return [
+                'isSuccess' => false,
+                'data' => $bookingID,
+                'message' => 'Booking was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

@@ -8,8 +8,6 @@ class PostBooking
 {
     public function execute($request)
     {
-        $booking = [];
-        $message = '';
         try
         {
             //create a new booking
@@ -17,16 +15,22 @@ class PostBooking
             $booking->content = $request->input('content');
             $booking->save();
 
-            $message = 'Booking was successfully created';
+            return [
+                'isSuccess' => true,
+                'data' => $booking,
+                'message' => 'Booking was successfully created',
+                'statusCode' => 201
+            ];
         }
         catch (\Throwable $th) {
-            $message = $th;
-            throw $th;
+            return [
+                'isSuccess' => false,
+                'data' => $booking,
+                'message' => $th->getMessage(),
+                'statusCode' => 500
+            ];
         }
 
-        return [
-            'booking' => $booking,
-            'message' => $message
-        ];
+        
     }
 }

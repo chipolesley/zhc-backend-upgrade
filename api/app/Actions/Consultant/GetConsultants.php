@@ -12,21 +12,23 @@ class GetConsultants
    {
         $consultants = Consultant::all();
 
-        if($consultants)
+        if($consultants !== null)
         {
-            $response = [
-                'consultants' => $consultants,
-                'message' => 'Consultant loaded successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $consultants,
+                'message' => 'Consultant loaded successfully',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'consultants' => $consultants,
-                'message' => 'Consultant was not found'
+            return [
+                'isSuccess' => false,
+                'data' => $consultants,
+                'message' => 'Consultant was not found',
+                'statusCode' => 404
             ];
         }
-        
-        return $response;
     }
 }

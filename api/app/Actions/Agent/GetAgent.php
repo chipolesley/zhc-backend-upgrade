@@ -9,21 +9,24 @@ class GetAgent
 {
     public function execute ($agentID)
     {
-        $agent = Agent::where('AgentID', '=', $agentID)->get();
+        $agent = Agent::where('AgentID', '=', $agentID)->first();
             
-            if ($agent) {
-                $response = [
-                    'agent' => $agent,
-                    'message' => 'Agent was loaded successfully'
+            if ($agent !== null) {
+               return  [
+                    'isSuccess' => true,
+                    'data' => $agent,
+                    'message' => 'Agent was loaded successfully',
+                    'statusCode' => 200
                 ];
             }
             else
             {
-                $response = [
-                    'agent' => [],
-                    'message' => 'Agent was not found'
+               return [
+                    'isSuccess' => false,
+                    'data' => [],
+                    'message' => 'Agent was not found',
+                    'statusCode' => 404
                 ];
             }
-            return $response;
     }
 }

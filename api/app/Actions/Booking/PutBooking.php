@@ -9,30 +9,38 @@ class PutBooking
     public function execute($request, $bookingID)
     {
         $booking = Booking::where('BookingID','=',$bookingID)->get();
-        if ($booking) {
-            try {
+
+        if ($booking !== null) {
+            try
+            {
                 $booking->content = $request->input('content');
                 $booking->save();
                 
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was successfully updated'
+                return [
+                    'isSuccess' => true,
+                    'data' => $booking,
+                    'message' => 'Booking was successfully updated',
+                    'statusCode' => 200
                 ];
-            } catch (\Throwable $th) {
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was not successfully updated'
+            }
+            catch (\Throwable $th)
+            {
+                return [
+                    'isSuccess' => false,
+                    'data' => $booking,
+                    'message' => $th->getMessage(),
+                    'statusCode' => 500
                 ];
-                throw $th;
             }
         }
         else
         {
-            $response = [
-                'booking' => [],
-                'message' => 'BookingID'.$bookingID.' was not found'
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'BookingID'.$bookingID.' was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

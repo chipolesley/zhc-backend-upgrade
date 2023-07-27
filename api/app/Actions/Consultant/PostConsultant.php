@@ -8,26 +8,28 @@ class PostConsultant
 {
     public function execute($request)
     {
-        $message = '';
         try
         {
             $consultant = new Consultant();
             $consultant->content = $request->input('content');
             $consultant->save();
 
-            $message = 'Consultant was created successfully';
+            return  [
+                'isSuccess' => true,
+                'data' => $consultant,
+                'message' => 'Consultant was created successfully',
+                'statusCode' => 201
+            ];
             
         }
         catch(\Throwable $th)
         {
-            $message = $th;
-
-            throw $th;
+            return  [
+                'isSuccess' => false,
+                'data' => $consultant,
+                'message' => $th->getMessage(),
+                'statusCode' => 200
+            ];
         }
-
-        return  [
-            'consultant' => $consultant,
-            'message' => $message
-        ];
     }
 }

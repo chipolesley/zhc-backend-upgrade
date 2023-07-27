@@ -12,19 +12,21 @@ class GetProducts
         
         if($products)
         {
-            $response = [
-                'products' => $products,
-                'message' => 'Products were loaded successfully'
+            return [
+                'isSuccess' => true,
+                'data' => $products,
+                'message' => 'Products were loaded successfully',
+                'statusCode' => 200
             ];
         }
         else
         {
-            $response = [
-                'products' => $products,
-                'message' => 'Products were not found'
+            return [
+                'isSuccess' => false,
+                'data' => $products,
+                'message' => 'Products were not found',
+                'statusCode' => 404
             ];
         }
-        
-        return $response;
     }
 }

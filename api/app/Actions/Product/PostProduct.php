@@ -14,19 +14,21 @@ class PostProduct
             $product->content = $request->input('content');
             $product->save();
 
-            $response = [
-                'product' => $product,
-                'message' => 'Product was successfully created'
+            return [
+                'isSuccess' => true,
+                'data' => $product,
+                'message' => 'Product was successfully created',
+                'statusCode' => 200
             ];
         }
         catch(\Throwable $th)
         {
-            $response = [
+            return [
+                'isSuccess' => false,
                 'product' => [],
-                'message' => $th
+                'message' => $th->getMessage(),
+                'statusCode' => 500
             ];
         }
-        
-        return $response;
     }
 }

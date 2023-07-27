@@ -102,21 +102,24 @@ class GetBookingPagination
                                     ->get();
         }
 
-        if ($booking)
+        if ($booking !== null)
         {
-            $response = [
-                'booking' => $booking,
-                'message' => 'Booking was loaded successfully'
-                ];
+            return [
+                'isSuccess' => true,
+                'data' => $booking,
+                'message' => 'Booking was loaded successfully',
+                'statusCode' => 200
+            ];
         }
         else
         {
-            $response = [
-                'booking' => [],
-                'message' => 'Booking not found'
-                ];
+            return [
+                'isSuccess' => false,
+                'data' => [],
+                'message' => 'Booking not found',
+                'statusCode' => 404
+            ];
         }
-        return $response;
     }
     
 }

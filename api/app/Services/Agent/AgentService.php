@@ -24,37 +24,31 @@ class AgentService implements AgentServiceInterface
 
     public function createAgent($request)
     {
-        $agent = $this->postAgentAction->execute($request);
-        return $agent;
+        return  $this->postAgentAction->execute($request);
     }
 
     public function retrieveAgent($agentID)
     {
-        $agent = $this->getAgentAction->execute($agentID);
-        return $agent;
+        return $this->getAgentAction->execute($agentID);
     }
 
     public function retrieveAgents()
     {
-        $agents = $this->getAgentsAction->execute();
-        return $agents;
+        return $this->getAgentsAction->execute();
     }
 
     public function paginateAgent($request)
     {
-        $agentsPagination = $this->getAgentPaginationAction->execute($request);
-        return $agentsPagination;
+        return $this->getAgentPaginationAction->execute($request);
     }
 
     public function updateAgent($request, $agentID)
     {
-        $agent = $this->putAgentAction->execute($request, $agentID);
-        return $agent;        
+        return $this->putAgentAction->execute($request, $agentID);
     }
 
     public function RemoveAgent($agentID)
     {
-        $agent = $this->deleteAgentAction->execute($agentID);
-        return $agent;
+        return $this->deleteAgentAction->execute($agentID);
     }
 }

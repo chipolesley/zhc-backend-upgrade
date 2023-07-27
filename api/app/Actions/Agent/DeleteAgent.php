@@ -9,21 +9,24 @@ class DeleteAgent
     public function execute($agentID)
     {
         $agent = Agent::where('AgentID','=',$agentID)->get();
-        if ($agent)
+        if ($agent !== null)
         {
             $agent->delete();
-            $response = [
-                'agent' => $agentID,
-                'message' => 'Agent was deleted'
-            ];
+            return [
+                    'isSuccess' => true,
+                    'data' => $agentID,
+                    'message' => 'Agent was deleted',
+                    'statusCode' => 200
+                ];
         }
         else
         {
-            $response = [
-                'agent' => $agentID,
-                'message' => 'Agent was not found'
+            return [
+                'isSuccess' => false,
+                'data' => $agentID,
+                'message' => 'Agent was not found',
+                'statusCode' => 404
             ];
         }
-        return $response;
     }
 }

@@ -29,28 +29,31 @@ class GetBooking
                                     ->get();
 
             //check if the booking exists
-            if ($booking) {
-                $response = [
-                    'booking' => $booking,
-                    'message' => 'Booking was loaded successfully'
+            if ($booking !== null) {
+                return [
+                    'isSuccess' => true,
+                    'data' => $booking,
+                    'message' => 'Booking was loaded successfully',
+                    'statusCode' => 200
                 ];
             }
             else
             {
-                $response = [
-                'booking' => $booking,
-                'message' => 'Booking was not found'
+                return [
+                    'isSuccess' => false,
+                    'data' => $booking,
+                    'message' => 'Booking was not found',
+                    'statusCode' => 404
                 ];
             }
         } catch (\Throwable $th) {
             
-            $response = [
-                'booking' => $booking,
-                'message' => $th
-                ];
-            throw $th;
+            return [
+                'isSuccess' => false,
+                'data' => $booking,
+                'message' => $th->getMessage(),
+                'statusCode' => 500
+            ];
         }
-
-        return $response;
     }
 }
