@@ -25,43 +25,36 @@ class BookingService implements BookingServiceInterface
     
     public function createBooking($request)
     {
-       $booking = $this->postBookingAction->execute($request);
-        return $booking;
+        return $this->postBookingAction->execute($request);
     }
 
     public function retrieveBookings()
     {
-        $bookings = $this->getBookingsAction->execute();
-        return $bookings;
+        return $this->getBookingsAction->execute();
     }
 
     public function searchBookings($paxName)
     {
-        $booking = $this->findBookingAction->execute($paxName);
-        return $booking;
+        return $this->findBookingAction->execute($paxName);
     }
 
     public function retrieveBooking($bookingID)
     {
-        $booking = $this->getBookingAction->execute($bookingID);
-        return $booking;
+        return $this->getBookingAction->execute($bookingID);
     }
 
     public function paginateBooking($request)
     {
-        $bookings = $this->getBookingPaginationAction->execute($request);
-        return $bookings;
+        return $this->getBookingPaginationAction->execute($request);
     }
 
     public function updateBooking($request, $bookingID)
     {
-        $booking = $this->putBookingAction->execute($request, $bookingID);
-        return $booking;
+        return $this->putBookingAction->execute($request, $bookingID);
     }
 
     public function removeBooking($bookingID)
     {
-        $booking = $this->deleteBookingAction->execute($bookingID);
-        return $booking;
+        return $this->deleteBookingAction->execute($bookingID);
     }
 }

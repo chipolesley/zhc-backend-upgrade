@@ -22,37 +22,31 @@ class ConsultantService implements ConsultantServiceInterface
 
     public function createConsultant($request)
     {
-        $consultant = $this->postConsultantAction->execute($request);
-        return $consultant;
+        return $this->postConsultantAction->execute($request);
     }
 
     public function retrieveConsultants()
     {
-        $consultants = $this->getConsultantsAction->execute();
-        return $consultants;
+        return $this->getConsultantsAction->execute();
     }
 
     public function retrieveConsultant($consultantID)
     {
-        $consultant = $this->getConsultantAction->execute($consultantID);
-        return $consultant;
+        return $this->getConsultantAction->execute($consultantID);
     }
 
     public function paginateConsultant($request)
     {
-        $consultants = $this->getConsultantPaginationAction->execute($request);
-        return $consultants;
+        return $this->getConsultantPaginationAction->execute($request);
     }
 
     public function updateConsultant($request, $consultantID)
     {
-        $consultant = $this->putConsultantAction->execute($request, $consultantID);
-        return $consultant;
+        return $this->putConsultantAction->execute($request, $consultantID);
     }
 
     public function removeConsultant($consultantID)
     {
-        $consultant = $this->deleteConsultantAction->execute($consultantID);
-        return $consultant;
+        return $this->deleteConsultantAction->execute($consultantID);
     }
 }

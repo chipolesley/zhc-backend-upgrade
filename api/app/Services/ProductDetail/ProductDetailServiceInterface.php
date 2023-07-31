@@ -20,7 +20,7 @@ interface ProductDetailServiceInterface
      * @param int $productDetail
      ** @return ProductDetail
      */
-    public function getProductDetail($request, $productDetail);
+    public function getProductDetail($productDetailID);
 
     /**
      * @param array $request
@@ -33,11 +33,11 @@ interface ProductDetailServiceInterface
      * @param int $productDetail
      ** @return ProductDetail
      */
-    public function updateProductDetail($request, $productDetail);
+    public function updateProductDetail($request, $productDetailID);
 
     /**
      * @param int $productDetail
      ** @return ProductDetail
      */
-    public function deleteProductDetail($productDetail);
+    public function deleteProductDetail($productDetailID);
 }

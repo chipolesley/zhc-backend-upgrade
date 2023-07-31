@@ -23,7 +23,7 @@ class GetBookings
                                   'Correspondence'
                                 )
                                 ->OrderBy('BookingID','desc')
-                                ->first();
+                                ->get();
         //check if there are any bookings
         if($bookings)
         {

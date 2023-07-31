@@ -24,37 +24,31 @@ class ProductService implements ProductServiceInterface
 
     public function createProduct($request)
     {
-        $product = $this->postProductAction->execute($request);
-        return $product;
+        return $this->postProductAction->execute($request);
     }
 
     public function retrieveProducts()
     {
-        $products = $this->getProductsAction->execute();
-        return $products;
+        return $this->getProductsAction->execute();
     }
 
     public function retrieveProduct($productID)
     {
-        $product = $this->getProductAction->execute($productID);
-        return $product;
+        return $this->getProductAction->execute($productID);
     }
 
     public function paginateProduct($request)
     {
-        $productsPagination = $this->getProductPaginationAction->execute($request);
-        return $productsPagination;        
+        return $this->getProductPaginationAction->execute($request);
     }
 
     public function updateProduct($request, $productID)
     {
-        $product = $this->putProductAction->execute($request, $productID);
-        return $product;
+        return $this->putProductAction->execute($request, $productID);
     }
 
     public function removeProduct($productID)
     {
-        $product = $this->deleteProductAction->execute($productID);
-        return $product;
+        return $this->deleteProductAction->execute($productID);
     }
 }
